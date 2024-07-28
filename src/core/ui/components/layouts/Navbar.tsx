@@ -1,11 +1,12 @@
 import { Menu, Search } from "lucide-react";
 import { Input, Sheet, SheetContent, SheetTrigger } from "../ui";
 import { SidebarRoutes } from "./partials";
+import { ToggleTheme } from "../ToggleTheme";
 
 export const Navbar = () => {
   return (
     <div className="flex items-center px-2 gap-x-4 md:px-6 justify-between w-full bg-background border-b h-20">
-      <div className="block md:hidden w-64">
+      <div className="block xl:hidden w-64">
         <Sheet>
           <SheetTrigger className="flex items-center">
             <Menu />
@@ -20,7 +21,7 @@ export const Navbar = () => {
         <Search strokeWidth={1} className="absolute top-2 right-2" />
       </div>
       <div className="flex gap-x-2 items-center">
-        <p>toggleTheme</p>
+        <ToggleTheme />
       </div>
     </div>
   );
