@@ -9,51 +9,20 @@ import {
   FormLabel,
   FormMessage,
   Input,
-  toast,
 } from "@/core/ui/components";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { useFormCreateDocumentTypes } from "./hooks";
+import { Loader } from "lucide-react";
 
-const formSchema = z.object({
-  name: z
-    .string()
-    .min(2, {
-      message: "Debe tener al menos 2 caracteres",
-    })
-    .max(20, {
-      message: "No debe superar los 20 caracteres",
-    }),
-  code: z.string().max(50, {
-    message: "No debe superar los 50 caracteres",
-  }),
-  description: z.string().max(256, {
-    message: "No debe superar los 256 caracteres",
-  }),
-});
+type TFormCreateDocumentTypesProps = {
+  handleCloseModal: () => void;
+};
 
-export const FormCreateDocumentTypes = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      description: "",
-      code: "",
-    },
+export const FormCreateDocumentTypes = ({
+  handleCloseModal,
+}: TFormCreateDocumentTypesProps) => {
+  const { form, onSubmit, isLoading } = useFormCreateDocumentTypes({
+    handleCloseModal,
   });
-
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    try {
-      toast({
-        title: "Se ha creado correctamente",
-      });
-    } catch (error) {
-      toast({
-        title: "Ocurrio un error",
-        variant: "destructive",
-      });
-    }
-  };
 
   return (
     <Form {...form}>
@@ -97,7 +66,21 @@ export const FormCreateDocumentTypes = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Crear</Button>
+        <div className="flex justify-between">
+          <Button type="submit" size="lg" disabled={isLoading}>
+            {isLoading && <Loader className="mr-2 h-4 w-4 animate-spin" />}
+            Crear
+          </Button>
+          <Button
+            type="button"
+            onClick={() => handleCloseModal()}
+            variant="outline"
+            size="lg"
+            disabled={isLoading}
+          >
+            Cerrar
+          </Button>
+        </div>
       </form>
     </Form>
   );

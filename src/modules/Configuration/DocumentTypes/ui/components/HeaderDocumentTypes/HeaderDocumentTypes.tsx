@@ -14,6 +14,11 @@ import { FormCreateDocumentTypes } from "../FormCreateDocumentTypes";
 
 export const HeaderDocumentTypes = () => {
   const [openModalCreate, setOpenModalCreate] = useState<boolean>(false);
+
+  const handleCloseModal = () => {
+    setOpenModalCreate(false);
+  };
+
   return (
     <div className="flex items-center justify-between">
       <h2 className="text-2xl">Lista de tipos de documentos</h2>
@@ -28,7 +33,7 @@ export const HeaderDocumentTypes = () => {
           <DialogHeader>
             <DialogTitle>Crear tipo de documento</DialogTitle>
           </DialogHeader>
-          <FormCreateDocumentTypes />
+          <FormCreateDocumentTypes handleCloseModal={handleCloseModal} />
         </DialogContent>
       </Dialog>
     </div>
